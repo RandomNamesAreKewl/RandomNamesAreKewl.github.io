@@ -34,7 +34,7 @@ NewGame(true);
 document.querySelector("#minesweeper-content").appendChild(canvas);
 
 
-document.querySelector("#new-game").addEventListener("click", NewGame);
+document.querySelector("#new-game").addEventListener("click", e => {NewGame();});
 function NewGame(use_defaults = false) {
     map = [];
     if(use_defaults) {
