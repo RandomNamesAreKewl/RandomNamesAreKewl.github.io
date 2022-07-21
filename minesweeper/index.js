@@ -57,7 +57,7 @@ function NewGame(use_defaults = false) {
     }
 
     // Stop dumb mine counts
-    mineCount = (mineCount > mapWidth * mapHeight) ? mapWidth * mapHeight - 1 : mineCount;
+    mineCount = (mineCount > mapWidth * mapHeight - 1) ? mapWidth * mapHeight - 1 : mineCount;
     // For if we couldn't place all the mines
     var minesOnMap = 0;
     let Attempts = 0;
