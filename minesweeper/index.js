@@ -38,12 +38,12 @@ document.querySelector("#new-game").addEventListener("click", e => {NewGame();})
 function NewGame(use_defaults = false) {
     map = [];
     if(use_defaults) {
-        mapWidth = 10;
-        mapHeight = 10;
+        mapWidth = 9;
+        mapHeight = 9;
         mineCount = 10;
     } else {
-        mapWidth = +prompt("Width:", 10);
-        mapHeight = +prompt("Height:", 10);
+        mapWidth = +prompt("Width:", 9);
+        mapHeight = +prompt("Height:", 9);
         mineCount = +prompt("Mines:", 10);
     }
     firstTurn = true;
