@@ -78,7 +78,7 @@ export const SplashTexts = [
     "Welcome to Moss!",
     "Don't steal features from Minecraft. Oh wait...",
     "Moss is a work in progress.",
-    "Moss is a nutreational supplement.",
+    "Moss is a nutritional supplement.",
     "Moss is a type of fungus.",
     "hi.",
     "|rDarkGreen|Moss",
@@ -97,7 +97,7 @@ export const SplashTexts = [
     "How many splash texts are there? Wasn't counting.",
     "Github exists.",
     "I don't know what to put here. So imagine something very inspiring is here.",
-    "I spent over half an hour on making the athetics alone.",
+    "I spent over half an hour on making the aesthetics alone.",
     "Cats are cute.",
     "Tomatos are edible.",
     "How have I not run out of ideas yet? I have no idea.",
@@ -106,5 +106,6 @@ export const SplashTexts = [
     "I need to make an idea generator.",
     "I need to finish a game someday.",
     "Ok I ran out of ideas. I'll just put a bunch of random words here.",
-    "Fun fact: there are 32 splash texts.",
+    "Fun fact: there are 33 splash texts.",
+    "Thank you extremjaws for telling me that I can't spell aesthetics. I'm not salty at all."
 ];

@@ -1,5 +1,5 @@
 import { Terminal, SplashTexts } from './util.js';
-import { Commands } from './commands.js';
+import { Commands, CurrentWorkingDirectory } from './commands.js';
 
 
 document.getElementById("input").focus();
@@ -10,7 +10,7 @@ function Tick() {
         vinput.removeChild(vinput.firstChild);
     }
     // update vinput
-    let colored = Terminal.color_string("|rGrey|:> |rWhite|" + document.getElementById("input").value);
+    let colored = Terminal.color_string("|rGrey|" + CurrentWorkingDirectory.printPath() + "> |rWhite|" + document.getElementById("input").value);
     for (let i=0; i<colored.length; i++) {
         vinput.appendChild(colored[i]);
     }
@@ -27,7 +27,7 @@ document.addEventListener("click", _ => {
 });
 document.addEventListener("keydown", e => {
     if (e.key == "Enter") {
-        Terminal.print("|rGrey|:> |rWhite|" + document.getElementById("input").value);
+        Terminal.print("|rGrey|" + CurrentWorkingDirectory.printPath() + "> |rWhite|" + document.getElementById("input").value);
         // TODO: use a deticated argument separator
         //       Instead of using the built in split function
         var args = document.getElementById("input").value.split(" ");
@@ -37,5 +37,6 @@ document.addEventListener("keydown", e => {
             Terminal.print(`|rRed|Error: Command \"${args[0]}|rRed|\" not found`);
         }
         document.getElementById("input").value = "";
+        Terminal.add_newline();
     }
 });
