@@ -14,7 +14,7 @@ body {
     margin: 0;
     padding: 12px;
     overflow-y: scroll;
-    height: 100vh;
+    height: 97.4vh;
     width: 100%;
     filter: url(#crt);
 }
@@ -49,6 +49,7 @@ pre {
 
 #vinput::after {
     content: "█";
+    animation: cursor 1s infinite steps(1);
     color: #ffffff;
 }
 
@@ -84,6 +85,8 @@ span.fg12 { color: #990099; } /* Dark Magenta */
 span.fg13 { color: #009999; } /* Dark Cyan */
 span.fg14 { color: #999999; } /* Grey */
 
+span.fg15 { color: #ffffff; animation: cursor 1s infinite steps(1); } /* Blink */
+
 /* Background Colors */
 span.bg0 { background-color: #000000; } /* Black */
 span.bg1 { background-color: #ff0000; } /* Red */
@@ -101,6 +104,21 @@ span.bg11 { background-color: #000099; } /* Dark Blue */
 span.bg12 { background-color: #990099; } /* Dark Magenta */
 span.bg13 { background-color: #009999; } /* Dark Cyan */
 span.bg14 { background-color: #999999; } /* Grey */
+
+span.bg15 { background-color: #ffffff; animation: cursor 1s infinite steps(1); } /* Blink */
+
+
+@keyframes cursor {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 
 @keyframes flicker {

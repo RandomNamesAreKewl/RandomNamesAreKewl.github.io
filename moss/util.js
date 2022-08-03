@@ -15,6 +15,7 @@ export const Terminal = {
         "darkmagenta",
         "darkcyan",
         "grey",
+        "blink", // Special color. Blinking text. Not a real color.
     ],
     color_string: function(text) {
         let bits = text.split("|");
@@ -106,6 +107,29 @@ export const SplashTexts = [
     "I need to make an idea generator.",
     "I need to finish a game someday.",
     "Ok I ran out of ideas. I'll just put a bunch of random words here.",
-    "Fun fact: there are 33 splash texts.",
-    "Thank you extremjaws for telling me that I can't spell aesthetics. I'm not salty at all."
+    "I am a string.",
+    "Thank you extremjaws for telling me that I can't spell aesthetics. I'm not salty at all.",
+    "MOSS is definitely not a ripoff of Minecraft. Seriously, it's not even in the same genre.",
+    "I used Visual Studio Code to make this.",
+    "I hope you enjoy Moss.",
+    "I only added splash texts because I was bored.",
+    "Splash texts are fun.",
+    "DO A BARREL ROLL!",
+    "This is the only splash text that\nis split into multiple lines.",
+    "I'm not sure if I should add more splash texts.",
+    "If you have any ideas for splash texts, please tell me.",
+    "Team Building 2 is not a sequel to TB Classic?",
+    "I dare you to count the number of splash texts.",
+    "\"I'm not sure if I should add more splash texts.\" - Me",
+    "\"Prepare for unforeseen consequences.\" - G-Guy",
+    "\"Quotes are a fun splash text to add.\" - Me",
+    "Rembember to like and subscribe! Also, hit the bell icon! If this is a YouTube video, that is.\nIf it's not, then I'm sorry.",
+    "\"The true citizen conserves valuable oxygen\" - Consul",
+    "I'm not going to fin",
+    "I'm going to finish this splash text",
+    "|rBlink|Time to blink!",
+    "I wrote this in my free time.",
+    "Alt+F4 for free cookies!",
+    "You'roue",
+    "Don't program a minecraft clone at 3 AM (SCARY)(POLICE CALLED)!"
 ];

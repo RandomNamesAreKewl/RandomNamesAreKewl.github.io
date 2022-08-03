@@ -3,6 +3,8 @@ import { Filesystem } from './filesystem.js';
 
 
 export var CurrentWorkingDirectory = Filesystem;
+export var Drives = [Filesystem];
+export var prompt = `"|rGrey|" + CurrentWorkingDirectory.printPath() + "> |rWhite|"`;
 // Define commands here
 export const Commands = {
     help: (...args) => {
@@ -53,23 +55,13 @@ export const Commands = {
         if(args.length < 1) {
             Terminal.print("|rRed|Error: No directory specified");
         } else {
-            if(args[0] == "..") {
-                if(CurrentWorkingDirectory.parent != null) {
-                    CurrentWorkingDirectory = CurrentWorkingDirectory.parent;
-                } else {
-                    Terminal.print("|rRed|Error: Already at root");
-                }
-                return;
-            }
-            var new_dir = CurrentWorkingDirectory.files.find(file => file.name == args[0]);
-            if(new_dir == undefined) {
+            let dir = CurrentWorkingDirectory.getFilePath(args.join(" "));
+            if(dir == null) {
                 Terminal.print(`|rRed|Error: Directory \"${args[0]}|rRed|\" not found`);
+            } else if(dir.type != "directory") {
+                Terminal.print(`|rRed|Error: \"${args[0]}|rRed|\" is not a directory`);
             } else {
-                if(new_dir.type == "directory") {
-                    CurrentWorkingDirectory = new_dir;
-                } else {
-                    Terminal.print(`|rRed|Error: \"${args[0]}|rRed|\" is not a directory`);
-                }
+                CurrentWorkingDirectory = dir;
             }
         }
     },
@@ -82,6 +74,29 @@ export const Commands = {
                 Terminal.print(`|rRed|Error: File \"${args[0]}|rRed|\" not found`);
             } else {
                 Terminal.print(file.content);
+            }
+        }
+    },
+    prompt: (...args) => {
+        if(args.length < 1) {
+            prompt = `"|rGrey|" + CurrentWorkingDirectory.printPath() + "> |rWhite|"`;
+        } else {
+            prompt = args.join(" ");
+        }
+    },
+    run: (...args) => {
+        if(args.length < 1) {
+            Terminal.print("|rRed|Error: No file specified");
+        } else {
+            var file = CurrentWorkingDirectory.files.find(file => file.name == args[0]);
+            if(file == undefined) {
+                Terminal.print(`|rRed|Error: File \"${args[0]}|rRed|\" not found`);
+            } else {
+                if(file.type == "file") {
+                    eval(file.content);
+                } else {
+                    Terminal.print(`|rRed|Error: \"${args[0]}|rRed|\" is not a file`);
+                }
             }
         }
     }
@@ -100,4 +115,5 @@ const help_topics = {
     splash: "Type |rGrey|splash|rWhite| to print a random splash text to the terminal. Type |rGrey|splash <number>|rWhite| to print <number> random splash texts to the terminal. Type |rGrey|splash *|rWhite| to print all splash texts to the terminal.",
     dir: "Type |rGrey|dir|rWhite| to list the files in the current directory.",
     cat: "Type |rGrey|cat <file>|rWhite| to print the contents of <file> to the terminal.",
+    prompt: "Type |rGrey|prompt|rWhite| to reset the prompt to the default. Type |rGrey|prompt <js>|rWhite| to set the prompt to <js>.",
 }

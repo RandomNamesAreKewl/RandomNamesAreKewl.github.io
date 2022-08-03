@@ -22,7 +22,31 @@ export class Folder extends File {
         files.forEach(file => {
             file.parent = this;
         });
-        this.type = "folder";
+        this.type = "directory";
+    }
+
+    getFilePath(path) {
+        var path_parts = path.split("/");
+        var current_dir = this;
+        for(var i = 0; i < path_parts.length; i++) {
+            var file = current_dir.files.find(file => file.name == path_parts[i]);
+            if(path_parts[i] == "..") {
+                if(current_dir.parent != null) {
+                    current_dir = current_dir.parent;
+                } else {
+                    return undefined;
+                }
+            } else if(file == undefined) {
+                return undefined;
+            } else {
+                if(file.type == "directory") {
+                    current_dir = file;
+                } else {
+                    return file;
+                }
+            }
+        }
+        return current_dir;
     }
 }
 
@@ -33,24 +57,12 @@ export class Drive extends Folder {
 }
 
 export var Filesystem = new Drive("C", [
-    new Folder("Homework", [
-        new Folder("Math", [
-            new Folder("Algebra", [
-                new File("Homework1.txt", "1. 2x + 3 = 5\n2. 3x - 2 = 7\n3. 4x + 5 = 9"),
-                new File("Not_a_viris.exe", "pretend there's super bad code in here"),
-            ]),
-            new Folder("Geometry", [
-                new File("Homework1.txt", "Cube"),
-                new File("Homework2.txt", "Cone"),
-                new File("Homework3.txt", "Sphere"),
-            ]),
-        ]),
-        new Folder("English", [
-            new File("Homework1.txt", "Write a story about a dog"),
-            new File("Homework2.txt", "Write a story about a cat"),
-            new File("Homework3.txt", "Write a story about a bird"),
-            new File("Homework4.txt", "Have Github Copilot create the contents of this folder"),
-        ])
+    new Folder("System", [
     ]),
-    new File("README.txt", "Thank you for reading me!")
+    new Folder("Programs", [
+        new File("test.js", "Terminal.print(\"Hello World!\");"),
+        new File("prompt_time.js", "prompt = `\"|rGrey|\" + new Date().getHours() + \":\" + new Date().getMinutes() + \" \" + CurrentWorkingDirectory.printPath() + \"> |rWhite|\"`"),
+    ]),
+    new File("|rGrey|Puzzle.txt", "Congrats! You solved the puzzle!"),
+    new File("README.txt", "|rYellow|Remember that this is a work in progress, and that it is not finished yet.\nIf you find any bugs, please report them to me on the GitHub page. Thanks!"),
 ]);
