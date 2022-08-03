@@ -105,7 +105,7 @@ span.bg12 { background-color: #990099; } /* Dark Magenta */
 span.bg13 { background-color: #009999; } /* Dark Cyan */
 span.bg14 { background-color: #999999; } /* Grey */
 
-span.bg15 { background-color: #ffffff; animation: cursor 1s infinite steps(1); } /* Blink */
+span.bg15 { animation: cursor 1s infinite steps(1); } /* Blink */
 
 
 @keyframes cursor {

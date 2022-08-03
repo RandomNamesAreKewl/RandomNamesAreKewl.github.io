@@ -1,10 +1,9 @@
 import { Terminal, SplashTexts } from './util.js';
-import { Commands, CurrentWorkingDirectory, prompt } from './commands.js';
+import { Commands, CurrentWorkingDirectory, prompt, CurrentProgram } from './commands.js';
 
 
 document.getElementById("input").focus();
 const vinput = document.getElementById("vinput");
-var CurrentProgram = null;
 function Tick() {
     requestAnimationFrame(Tick);
 }
