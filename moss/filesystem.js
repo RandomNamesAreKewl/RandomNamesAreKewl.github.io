@@ -15,6 +15,13 @@ export class File {
     }
 }
 
+export class CodeFile extends File {
+    constructor(name, content, parent = null) {
+        super(name, content, parent);
+        this.type = "code";
+    }
+}
+
 export class Folder extends File {
     constructor(name, files = [], parent = null) {
         super(name, null, parent)
@@ -56,22 +63,53 @@ export class Drive extends Folder {
     }
 }
 
-export var Filesystem = new Drive("C", [
-    new Folder("System", [
-        new Folder("Cache", [
-            new File("Cache2fcb", "2231844322"),
-            new File("Cache12fb", "2231123422"),
-            new File("Cache1950", "Commands.clear();\nvar ap = document.createElement(\"img\");\nap.src = \"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Aperture_Science.svg/1200px-Aperture_Science.svg.png\";\nap.width = 128;\ndocument.getElementById(\"text\").appendChild(ap);\nTerminal.add_newline();\nTerminal.print(\"The cake is a lie\");")
+export var Filesystem = new Drive("c", [
+    new Folder("system", [
+        new Folder("commands", [
+            new CodeFile("echo.exe", (Terminal, args) => {
+                Terminal.print(args.join(" ") + "\n");
+            }),
+            new CodeFile("cd.exe", (Terminal, args) => {
+                Terminal.change_dir(args.join(" "));
+            }),
+            new CodeFile("dir.exe", (Terminal, args) => {
+                Terminal.get_current_dir().files.filter(file => file.type == "directory").forEach(file => {
+                    Terminal.print("dir  - " + file.name + "\n");
+                })
+                Terminal.get_current_dir().files.filter(file => (file.type == "file" || file.type == "code")).forEach(file => {
+                    Terminal.print("file - " + file.name + "\n");
+                })
+            }),
+            new CodeFile("type.exe", (Terminal, args) => {
+                var file = Terminal.get_current_dir().getFilePath(args.join(" "));
+                if(file == undefined) {
+                    Terminal.print("No such file or directory\n", "red", "black");
+                } else {
+                    Terminal.print(file.content + "\n");
+                }
+            }),
+            new CodeFile("cls.exe", (Terminal, args) => {
+                Terminal.clear_screen();
+            })
         ]),
-        new Folder("Test", [
-            new File("Colors.exe", "var colors = [\"Black\", \"Red\", \"Green\", \"Yellow\", \"Blue\", \"Magenta\", \"Cyan\", \"White\", \"DarkRed\", \"DarkGreen\", \"DarkYellow\", \"DarkBlue\", \"DarkMagenta\", \"DarkCyan\", \"Grey\", \"Blink\"];\nfor(var i=0; i<colors.length; i++) {\n    for(var j=0; j<colors.length; j++) {\n        Terminal.print(\"|f\" + colors[i] + \"||b\" + colors[j] + \"|\" + colors[i] + \", \" + colors[j]);\n    }\n}"),
-            new File("3DAccel.exe", "Brick();")
-        ])
-    ]),
-    new Folder("Programs", [
-        new File("test.exe", "Terminal.print(\"Hello World!\");"),
-        new File("prompt_time.exe", "prompt = `\"|rGrey|\" + new Date().getHours() + \":\" + new Date().getMinutes() + \" \" + CurrentWorkingDirectory.printPath() + \"> |rWhite|\"`"),
-    ]),
-    new File("|rGrey|Puzzle.txt", "Congrats! You solved the puzzle!"),
-    new File("README.txt", "|rYellow|Remember that this is a work in progress, and that it is not finished yet.\nIf you find any bugs, please report them to me on the GitHub page. Thanks!"),
+        new CodeFile("shell.exe", (Terminal, CurrentWorkingDirectory) => {
+            Terminal.print("welcome to ", "grey");
+            Terminal.print("moss", "green");
+            Terminal.print(" 2.0\n", "grey");
+            Terminal.print("type \"help\" for a list of commands.\n", "grey");
+            function shell() {
+                Terminal.get_userinput("\n" + Terminal.get_current_dir().printPath() + "> ").then(input => {
+                    var args = input.split(" ");
+                    var command = args.shift();
+                    if(Filesystem.getFilePath("system/commands/" + command + ".exe") !== undefined) {
+                        Filesystem.getFilePath("system/commands/" + command + ".exe").content(Terminal, args);
+                    } else {
+                        Terminal.print(`Error: Command \"${command}\" not found\n`, "red");
+                    }
+                    shell();
+                });
+            }
+            shell();
+        })
+    ])
 ]);

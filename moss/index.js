@@ -1,53 +1,41 @@
-import { Terminal, SplashTexts } from './util.js';
-import { Commands, CurrentWorkingDirectory, prompt, CurrentProgram } from './commands.js';
+import { Terminal } from './util.js';
+import { Buffer, Character, Colors } from './video.js';
 
 
-document.getElementById("input").focus();
-const vinput = document.getElementById("vinput");
-function Tick() {
-    requestAnimationFrame(Tick);
+const view = document.getElementById("view");
+const ctx = view.getContext("2d");
+view.width = 8 * 80 + 24;
+view.height = 12 * 50 + 24;
+const font = document.createElement("canvas");
+const fontctx = font.getContext("2d");
+font.width = 96;
+font.height = 144;
+const font_key = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{};':\",./<>?`~\\| █";
+const default_font = new Image();
+default_font.src = "font.png";
+default_font.onload = () => {
+    fontctx.drawImage(default_font, 0, 0);
 }
-// Startup delay of 0.3 seconds
-// For aesthetic purposes
-setTimeout(() => {
-    Tick();
-    Terminal.print("|rGrey|Welcome to |rDarkGreen|Moss|rGrey|!");
-    Terminal.print("|rGrey|Type |rWhite|help|rGrey| for a list of help topics.");
-    Terminal.print("|rYellow|" + SplashTexts[Math.floor(Math.random() * SplashTexts.length)]);
-    Terminal.add_newline();
-    let colored = Terminal.color_string(eval(prompt) + document.getElementById("input").value);
-    for (let i=0; i<colored.length; i++) {
-        vinput.appendChild(colored[i]);
-    }
-}, 300);
-
-document.addEventListener("click", _ => {
-    document.getElementById("input").focus();
-});
-document.addEventListener("keydown", e => {
-    if (e.key == "Enter") {
-        if(CurrentProgram == null) {
-            Terminal.print(eval(prompt) + document.getElementById("input").value);
-            // TODO: use a deticated argument separator
-            //       Instead of using the built in split function
-            var args = document.getElementById("input").value.split(" ");
-            if (args[0].toLowerCase() in Commands) {
-                Commands[args[0].toLowerCase()](...args.slice(1));
-            } else {
-                Terminal.print(`|rRed|Error: Command \"${args[0]}|rRed|\" not found`);
+function Update() {
+    ctx.clearRect(0, 0, view.width, view.height);
+    for(var i=0; i<Buffer.length; i++) {
+        for(var j=0; j<Buffer[i].length; j++) {
+            ctx.fillStyle = Colors[Buffer[i][j].bg];
+            ctx.fillRect(12 + j * 8, 12 + i * 12, 8, 12);
+            ctx.fillStyle = Buffer[i][j].fg;
+            for(var k=0; k<font_key.length; k++) {
+                if(Buffer[i][j].char == font_key[k]) {
+                    ctx.drawImage(font, (k % 12) * 8, Math.floor(k / 12) * 12, 8, 12, 12 + j * 8, 12 + i * 12, 8, 12);
+                    break;
+                }
             }
-            document.getElementById("input").value = "";
-            Terminal.add_newline();
         }
     }
-    // Janky solution for updating the vinput AFTER the character has been typed
-    setTimeout(() => {
-        while (vinput.firstChild) {
-            vinput.removeChild(vinput.firstChild);
-        }
-        let colored = Terminal.color_string(eval(prompt) + document.getElementById("input").value);
-        for (let i=0; i<colored.length; i++) {
-            vinput.appendChild(colored[i]);
-        }
-    }, 1);
-});
+    requestAnimationFrame(Update);
+}
+Update();
+if(Terminal.get_drive("c").getFilePath("system/shell.exe") != undefined) {
+    Terminal.get_drive("c").getFilePath("system/shell.exe").content(Terminal);
+} else {
+    Terminal.print("error: could not find c:/system/shell.exe");
+}

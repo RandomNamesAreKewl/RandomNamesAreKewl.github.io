@@ -1,9 +1,4 @@
-import { Buffer, Character } from './video.js';
-import { Filesystem } from './filesystem.js';
-
-export var cursor_pos = [0, 0];
 export const Terminal = {
-    // Deprecated
     colors: [
         "black",
         "red",
@@ -22,82 +17,63 @@ export const Terminal = {
         "grey",
         "blink", // Special color. Blinking text. Not a real color.
     ],
-    print: (text, fg = "white", bg = "black") => {
-        for(var i = 0; i < text.length; i++) {
-            if(text[i] == "\n") {
-                cursor_pos[0]++;
-                cursor_pos[1] = 0;
-            } else {
-                if(cursor_pos[1] >= Buffer[0].length) {
-                    cursor_pos[0]++;
-                    cursor_pos[1] = 0;
-                }
-                Buffer[cursor_pos[0]][cursor_pos[1]] = new Character(text[i], fg, bg);
-                cursor_pos[1]++;
-            }
-        }
-    },
-    get_userinput: (prompt = "> ", fg = "white", bg = "black") => {
-        Terminal.print(prompt, fg, bg);
-        Buffer[cursor_pos[0]][cursor_pos[1]] = new Character("█", fg, bg);
-        return new Promise((resolve, reject) => {
-            var input = "";
-            function keydown(e) {
-                if(e.key === "Enter") {
-                    document.removeEventListener("keydown", keydown);
-                    Buffer[cursor_pos[0]][cursor_pos[1]] = new Character(" ", fg, bg);
-                    Terminal.print("\n", fg, bg);
-                    resolve(input);
-                } else if(e.key === "Backspace") {
-                    if(input.length > 0) {
-                        Buffer[cursor_pos[0]][cursor_pos[1]] = new Character(" ", fg, bg);
-                        input = input.slice(0, -1);
-                        cursor_pos[1]--;
-                        Buffer[cursor_pos[0]][cursor_pos[1]] = new Character("█", fg, bg);
+    color_string: function(text) {
+        let bits = text.split("|");
+        let fgColor = "White";
+        let bgColor = "Black";
+        let result = [];
+        for(var i=0; i<bits.length; i++) {
+            if (i % 2 == 1) {
+                if (Terminal.colors.includes(bits[i].slice(1).toLowerCase()) && i < bits.length - 1) {
+                    switch(bits[i][0]) {
+                        case "f":
+                            fgColor = bits[i].slice(1).toLowerCase();
+                            break;
+                        case "b":
+                            bgColor = bits[i].slice(1).toLowerCase();
+                            break;
+                        case "r":
+                            fgColor = bits[i].slice(1).toLowerCase();
+                            bgColor = "Black";
+                            break;
+                        case "!":
+                            fgColor = bgColor.toLowerCase(); // Force a deep copy. Can be used as color names are all lowercase.
+                            bgColor = bits[i].slice(1).toLowerCase();
+                            break;
                     }
+                } else {
+                    let temp = document.createElement("span");
+                    temp.classList.add("fg" + Terminal.colors.indexOf(fgColor));
+                    temp.classList.add("bg" + Terminal.colors.indexOf(bgColor));
+                    temp.innerText = "|" + bits[i];
+                    if (i < bits.length - 1) {
+                        temp.innerText += "|";
+                    }
+                    result.push(temp);
                 }
-                if(e.key.length == 1) {
-                    input += e.key;
-                    Terminal.print(e.key, fg, bg);
-                    Buffer[cursor_pos[0]][cursor_pos[1]] = new Character("█", fg, bg);
-                }
-            }
-            document.addEventListener("keydown", keydown);
-        });
-    },
-    change_dir: (path) => {
-        var new_path = CurrentWorkingDirectory.getFilePath(path);
-        if(new_path == undefined) {
-            Terminal.print("No such file or directory\n", "red", "black");
-        } else {
-            CurrentWorkingDirectory = new_path;
-        }
-    },
-    get_current_dir: () => {
-        return CurrentWorkingDirectory;
-    },
-    get_drive: (letter) => {
-        return Drives.find(drive => drive.name == letter + ":");
-    },
-    clear_screen: () => {
-        for(var i = 0; i < Buffer.length; i++) {
-            for(var j = 0; j < Buffer[i].length; j++) {
-                Buffer[i][j] = new Character(" ", "white", "black");
+            } else {
+                let temp = document.createElement("span");
+                temp.classList.add("fg" + Terminal.colors.indexOf(fgColor));
+                temp.classList.add("bg" + Terminal.colors.indexOf(bgColor));
+                temp.innerText = bits[i];
+                result.push(temp);
             }
         }
-        cursor_pos = [0, 0];
+        return result;
+    },
+    print: (text, nonewline = false) => {
+        let colored = Terminal.color_string(text);
+        for (let i=0; i<colored.length; i++) {
+            document.getElementById("text").appendChild(colored[i]);
+        }
+        if (!nonewline) {
+            document.getElementById("text").appendChild(document.createElement("br"));
+        }
+    },
+    add_newline: () => {
+        document.getElementById("text").appendChild(document.createElement("br"));
     }
 };
-
-var CurrentWorkingDirectory = Filesystem;
-var Drives = [Filesystem];
-
-// Might make these work with the new Terminal.print() function later
-export const RemovedSplashTexts = [
-    "|rDarkGreen|Moss",
-    "|rDarkGreen|Moss|rYellow| is a |rGreen|green|rYellow| color.",
-    "|rBlink|Time to blink!"
-];
 
 export const SplashTexts = [
     "Welcome to Moss!",
@@ -106,6 +82,8 @@ export const SplashTexts = [
     "Moss is a nutritional supplement.",
     "Moss is a type of fungus.",
     "hi.",
+    "|rDarkGreen|Moss",
+    "|rDarkGreen|Moss|rYellow| is a |rGreen|green|rYellow| color.",
     "Thinking about cheese...",
     "Did you know BSP stands for Binary Space Partitioning?",
     "Did you know that the first game to use BSP was DOOM?",
@@ -149,6 +127,7 @@ export const SplashTexts = [
     "\"The true citizen conserves valuable oxygen\" - Consul",
     "I'm not going to fin",
     "I'm going to finish this splash text",
+    "|rBlink|Time to blink!",
     "I wrote this in my free time.",
     "Alt+F4 for free cookies!",
     "You'roue",
