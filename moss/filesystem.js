@@ -74,10 +74,10 @@ export var Filesystem = new Drive("c", [
             }),
             new CodeFile("dir.exe", (Terminal, args) => {
                 Terminal.get_current_dir().files.filter(file => file.type == "directory").forEach(file => {
-                    Terminal.print("dir  - " + file.name + "\n");
+                    Terminal.print("dir  - " + file.name + "\n", "grey");
                 })
                 Terminal.get_current_dir().files.filter(file => (file.type == "file" || file.type == "code")).forEach(file => {
-                    Terminal.print("file - " + file.name + "\n");
+                    Terminal.print("file - " + file.name + "\n", "grey");
                 })
             }),
             new CodeFile("type.exe", (Terminal, args) => {
@@ -85,18 +85,37 @@ export var Filesystem = new Drive("c", [
                 if(file == undefined) {
                     Terminal.print("No such file or directory\n", "red", "black");
                 } else {
-                    Terminal.print(file.content + "\n");
+                    Terminal.print(file.content + "\n", "grey");
                 }
             }),
             new CodeFile("cls.exe", (Terminal, args) => {
                 Terminal.clear_screen();
+            }),
+            new CodeFile("help.exe", (Terminal, args) => {
+                if(args.length < 1) {
+                    Terminal.print("help <topic> - displays help for <topic>\ntopics:\n", "grey");
+                    Terminal.get_drive("c").getFilePath("system/help").files.filter(file => file.type == "file").forEach(file => {
+                        Terminal.print("- " + file.name.slice(0, -4) + "\n", "grey");
+                    })
+                } else {
+                    var file = Terminal.get_drive("c").getFilePath("system/help/" + args.join(" ") + ".txt");
+                    if(file == undefined) {
+                        Terminal.print("No such file or directory\n", "red", "black");
+                    } else {
+                        // Grey is more readable than white
+                        Terminal.print(file.content + "\n", "grey");
+                    }
+                }
             })
+        ]),
+        new Folder("help", [
+            new File("moss.txt", "moss is the os of the future. if you think using a crt outdated, you're wrong.\nmoss is designed for 80x25 character displays so things may display incorrectly if you use another size."),
         ]),
         new CodeFile("shell.exe", (Terminal, CurrentWorkingDirectory) => {
             Terminal.print("welcome to ", "grey");
-            Terminal.print("moss", "green");
+            Terminal.print("moss", "darkgreen");
             Terminal.print(" 2.0\n", "grey");
-            Terminal.print("type \"help\" for a list of commands.\n", "grey");
+            Terminal.print("type \"help\" for a list of topics.\n", "grey");
             function shell() {
                 Terminal.get_userinput("\n" + Terminal.get_current_dir().printPath() + "> ").then(input => {
                     var args = input.split(" ");

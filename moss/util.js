@@ -57,8 +57,8 @@ export const Terminal = {
                     }
                 }
                 if(e.key.length == 1) {
-                    input += e.key;
-                    Terminal.print(e.key, fg, bg);
+                    input += e.key.toLowerCase();
+                    Terminal.print(e.key.toLowerCase(), fg, bg);
                     Buffer[cursor_pos[0]][cursor_pos[1]] = new Character("█", fg, bg);
                 }
             }
@@ -86,7 +86,8 @@ export const Terminal = {
             }
         }
         cursor_pos = [0, 0];
-    }
+    },
+    display_mode: "text"
 };
 
 var CurrentWorkingDirectory = Filesystem;
