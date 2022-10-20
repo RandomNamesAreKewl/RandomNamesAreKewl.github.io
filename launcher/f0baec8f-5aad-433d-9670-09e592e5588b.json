@@ -1,0 +1,8 @@
+{
+  "title": "Aggressive Roomba",
+  "description": "A game about running from roombas",
+  "download": "https://github.com/extremjaws/Angry-Roomba-Project/releases/download/demo/windowsBuild.zip",
+  "play": {
+    "program": "Builds/Aggressive roomba.exe"
+  }
+}
