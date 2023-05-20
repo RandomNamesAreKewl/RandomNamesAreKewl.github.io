@@ -1,0 +1,188 @@
+body {
+    background-color: #050202;
+    color: white;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 24px;
+    margin: 0;
+    padding: 0px;
+    height: 97.4vh;
+    overflow: hidden;
+}
+
+#view {
+    position: absolute;
+    margin: 0;
+    padding: 12px;
+    overflow-y: scroll;
+    height: 97.4vh;
+    width: 100%;
+    filter: url(#crt);
+}
+
+#view::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Scanline effect */
+body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+pre {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+#vinput::after {
+    content: "█";
+    animation: cursor 1s infinite steps(1);
+    color: #ffffff;
+}
+
+#input {
+    background-color: transparent;
+    border: none;
+    color: transparent;
+    user-select: none;
+    position: absolute;
+    top: -100%;
+    left: 0;
+}
+
+#input:focus {
+    outline: none;
+}
+
+/* Character Colors */
+span.fg0 { color: #000000; } /* Black */
+span.fg1 { color: #ff0000; } /* Red */
+span.fg2 { color: #00ff00; } /* Green */
+span.fg3 { color: #ffff00; } /* Yellow */
+span.fg4 { color: #0000ff; } /* Blue */
+span.fg5 { color: #ff00ff; } /* Magenta */
+span.fg6 { color: #00ffff; } /* Cyan */
+span.fg7 { color: #ffffff; } /* White */
+
+span.fg8 { color: #990000; } /* Dark Red */
+span.fg9 { color: #009900; } /* Dark Green */
+span.fg10 { color: #999900; } /* Dark Yellow */
+span.fg11 { color: #000099; } /* Dark Blue */
+span.fg12 { color: #990099; } /* Dark Magenta */
+span.fg13 { color: #009999; } /* Dark Cyan */
+span.fg14 { color: #999999; } /* Grey */
+
+span.fg15 { color: #ffffff; animation: cursor 1s infinite steps(1); } /* Blink */
+
+/* Background Colors */
+span.bg0 { background-color: #000000; } /* Black */
+span.bg1 { background-color: #ff0000; } /* Red */
+span.bg2 { background-color: #00ff00; } /* Green */
+span.bg3 { background-color: #ffff00; } /* Yellow */
+span.bg4 { background-color: #0000ff; } /* Blue */
+span.bg5 { background-color: #ff00ff; } /* Magenta */
+span.bg6 { background-color: #00ffff; } /* Cyan */
+span.bg7 { background-color: #ffffff; } /* White */
+
+span.bg8 { background-color: #990000; } /* Dark Red */
+span.bg9 { background-color: #009900; } /* Dark Green */
+span.bg10 { background-color: #999900; } /* Dark Yellow */
+span.bg11 { background-color: #000099; } /* Dark Blue */
+span.bg12 { background-color: #990099; } /* Dark Magenta */
+span.bg13 { background-color: #009999; } /* Dark Cyan */
+span.bg14 { background-color: #999999; } /* Grey */
+
+span.bg15 { animation: cursor 1s infinite steps(1); } /* Blink */
+
+
+@keyframes cursor {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes flicker {
+    0% {
+    opacity: 0.27861;
+    }
+    5% {
+    opacity: 0.34769;
+    }
+    10% {
+    opacity: 0.23604;
+    }
+    15% {
+    opacity: 0.90626;
+    }
+    20% {
+    opacity: 0.18128;
+    }
+    25% {
+    opacity: 0.83891;
+    }
+    30% {
+    opacity: 0.65583;
+    }
+    35% {
+    opacity: 0.67807;
+    }
+    40% {
+    opacity: 0.26559;
+    }
+    45% {
+    opacity: 0.84693;
+    }
+    50% {
+    opacity: 0.96019;
+    }
+    55% {
+    opacity: 0.08594;
+    }
+    60% {
+    opacity: 0.20313;
+    }
+    65% {
+    opacity: 0.71988;
+    }
+    70% {
+    opacity: 0.53455;
+    }
+    75% {
+    opacity: 0.37288;
+    }
+    80% {
+    opacity: 0.71428;
+    }
+    85% {
+    opacity: 0.70419;
+    }
+    90% {
+    opacity: 0.7003;
+    }
+    95% {
+    opacity: 0.36108;
+    }
+    100% {
+    opacity: 0.24387;
+    }
+  }

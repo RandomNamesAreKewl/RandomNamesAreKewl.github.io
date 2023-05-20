@@ -1,0 +1,17 @@
+function Brick() {
+    CurrentProgram = "brick";
+    Commands.clear();
+    document.getElementById("input").disabled = true;
+    prompt = "\"Press any key to waste your time\"";
+    document.getElementById("view").style.backgroundColor = "#0000FF99";
+    Terminal.print("A fatal exception has occurred at 0xFF2342CD in MOSS");
+    Terminal.print("If this is the first time you've seen this error screen, restart your computer.\n");
+    Terminal.print("If this screen appears again, follow these steps:");
+    Terminal.print("-Check to make sure any new hardware or software is properly installed.");
+    Terminal.print("-If this is a new installation, ask your hardware or software manufacturer for any MOSS updates you might need.");
+    Terminal.print("-If problems continue, disable or remove any newly installed hardware or software.");
+    Terminal.print("-Disable BIOS memory options such as caching or shadowing.");
+    Terminal.print("-If you don't know how to disable your BIOS memory caching or shadowing options.\n god help you.");
+    Terminal.print("If the problem continues, give this code to your system administrator: 0xCD42FF23");
+    Terminal.print("The current application will be terminated\n");
+}

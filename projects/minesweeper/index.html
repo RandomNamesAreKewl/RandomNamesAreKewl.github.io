@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <script src="index.js" type="module"></script>
+    <style>
+        #minesweeper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <title>Minesweeper</title>
+</head>
+<body>
+    <div id="minesweeper" class="window" style="width: fit-content">
+        <div class="title-bar">
+            <div class="title-bar-text">Minesweeper</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div id="minesweeper-content" class="window-body" style="margin: 1px">
+            <button id="new-game">New game</button>
+            <p id="mine-counter">Mines: 10</p>
+            <p id="timer">Time: 0</p>
+        </div>
+    </div>
+</body>
+</html>
