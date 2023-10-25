@@ -1,24 +1,7 @@
-const vert_shader = `precision mediump float;
-
-attribute vec2 vertPosition;
-attribute vec2 vertuv;
-varying vec2 uv;
-
-void main()
-{
-    gl_Position = vec4(vertPosition, 0.0, 1.0);
-    uv = vertuv;
-}`;
-const frag_shader = `precision mediump float;
-
-varying vec2 uv;
-
-void main()
-{
-    gl_FragColor = vec4(uv, 0.0, 1.0);
-}`;
-const canvas = document.getElementById("canvas");
-const gl = canvas.getContext("webgl2");
+var vert_shader = "precision mediump float;\n\nattribute vec2 vertPosition;\nattribute vec2 vertuv;\nvarying vec2 uv;\n\nvoid main()\n{\n    gl_Position = vec4(vertPosition, 0.0, 1.0);\n    uv = vertuv;\n}";
+var frag_shader = "precision mediump float;\n\nvarying vec2 uv;\n\nvoid main()\n{\n    gl_FragColor = vec4(uv, 0.0, 1.0);\n}";
+var canvas = document.getElementById("canvas");
+var gl = canvas.getContext("webgl2");
 if (!gl) {
     alert("No webgl2 support?");
 }

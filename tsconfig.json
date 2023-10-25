@@ -1,6 +1,5 @@
 {
-    "compilerOptions": {
-        "module": "ESNext",
-        "target": "ESNext",
-    }
+    "exclude": [
+        "projects/**"
+    ]
 }
