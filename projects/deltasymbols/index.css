@@ -1,0 +1,26 @@
+body {
+	background-color: #223;
+	color: white;
+	font-family: sans-serif;
+}
+
+input {
+	background-color: #567;
+	border-radius: 8px;
+	border: none;
+	color: white;
+}
+
+canvas {
+	padding-top: 8px;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: max-content auto;
+	gap: 8px;
+}
+
+.grid > input {
+	grid-column: 2;
+}

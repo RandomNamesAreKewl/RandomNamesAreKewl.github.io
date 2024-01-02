@@ -27,6 +27,9 @@ filesystem.addFile(new VirtualDirectory("projects"));
 (filesystem.getPath("projects") as VirtualDirectory).addFile(new FilesystemNode("Dodge", () => {
 	location.assign("projects/dodge");
 }, {Type: "file", Executable: true}));
+(filesystem.getPath("projects") as VirtualDirectory).addFile(new FilesystemNode("DeltaSymbols", () => {
+	location.assign("projects/deltasymbols");
+}, {Type: "file", Executable: true}));
 let currentWorkingDirectory = filesystem;
 
 function pushPrompt()
