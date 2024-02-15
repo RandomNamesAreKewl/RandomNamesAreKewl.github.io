@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/98.css">
+	<link rel="stylesheet" href="index.css">
+	<title>Fish: Find your true self</title>
+</head>
+<body>
+	<div id="taskbar">
+		<button class="start-button"></button>
+		<span class="seperator"></span>
+		<span class="seperator"></span>
+		<span style="flex-grow: 1;"></span>
+		<span class="seperator"></span>
+		<div id="tray">
+			<p id="time">0:00:00</p>
+		</div>
+	</div>
+	<div id="fish-fyts-window" class="window" style="width: 400px;">
+		<div class="title-bar">
+			<div class="title-bar-text">Fish: Find your true self</div>
+			<div class="title-bar-controls">
+				<button aria-label="Help"></button>
+				<button aria-label="Close"></button>
+			</div>
+		</div>
+		<div class="window-body">
+			<img src="Fishes/Fish01.png" id="fish-image"><br>
+			<div id="question-counter">Question 1/50</div>
+			<div id="question"></div>
+			<span id="answers">
+				<button onclick="button_yes();">Yes</button>
+				<button onclick="button_no();">No</button>
+				<button onclick="button_possibly();">Possibly</button>
+			</span>
+			<span id="fishy-o-meter"></span>
+			<div id="fishy-o-meter-label">Fishy-o-meter</div>
+		</div>
+	</div>
+	<script src="index.js"></script>
+</body>
+</html>
