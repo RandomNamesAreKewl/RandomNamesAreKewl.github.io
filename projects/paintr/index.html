@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="index.css">
+	<title>Pain-tr</title>
+</head>
+<body>
+	<div id="toolbar">
+		<div id="toolbar-top">
+			<button onclick="newImg();">New</button>
+			<button onclick="saveImg();">Save</button>
+			<button onclick="loadImg();">Load</button>
+		</div>
+		<div id="toolbar-bottom">
+			<select id="zoom-selector">
+				<option value="1.0">100%</option>
+				<option value="2.0">200%</option>
+				<option value="3.0">300%</option>
+				<option value="4.0">400%</option>
+				<option value="5.0">500%</option>
+				<option value="6.0">600%</option>
+				<option value="7.0">700%</option>
+				<option value="8.0">800%</option>
+				<option value="9.0">900%</option>
+				<option value="10.0">1000%</option>
+			</select>
+			<select id="cur-tool">
+				<option value="pencil">Pencil</option>
+				<option value="brush">Brush</option>
+				<option value="fill">Bucket</option>
+			</select>
+			<input type="color" id="primary-color" value="#000000">
+			<input type="color" id="secondary-color" value="#FFFFFF">
+		</div>
+	</div>
+	<div id="canvas-area">
+		<canvas width="160" height="120"></canvas>
+	</div>
+	<script src="index.js"></script>
+</body>
+</html>

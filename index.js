@@ -27,6 +27,9 @@ filesystem.getPath("projects").addFile(new FilesystemNode("Dodge", function () {
 filesystem.getPath("projects").addFile(new FilesystemNode("DeltaSymbols", function () {
     location.assign("projects/deltasymbols");
 }, { Type: "file", Executable: true }));
+filesystem.getPath("projects").addFile(new FilesystemNode("Pain.tr", function () {
+    location.assign("projects/paintr");
+}, { Type: "file", Executable: true }));
 var currentWorkingDirectory = filesystem;
 function pushPrompt() {
     write("\n[user@randomnamesarekewl.github.io ", "green");

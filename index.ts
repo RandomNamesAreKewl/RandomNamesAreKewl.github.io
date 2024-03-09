@@ -30,6 +30,9 @@ filesystem.addFile(new VirtualDirectory("projects"));
 (filesystem.getPath("projects") as VirtualDirectory).addFile(new FilesystemNode("DeltaSymbols", () => {
 	location.assign("projects/deltasymbols");
 }, {Type: "file", Executable: true}));
+(filesystem.getPath("projects") as VirtualDirectory).addFile(new FilesystemNode("Pain.tr", () => {
+	location.assign("projects/paintr");
+}, {Type: "file", Executable: true}));
 let currentWorkingDirectory = filesystem;
 
 function pushPrompt()
